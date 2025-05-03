@@ -5,6 +5,10 @@ from pydantic import PostgresDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+class RedisSettings(BaseModel):
+    host: str
+    port: int
+
 class RunConfig(BaseModel):
     host: str = '127.0.0.1'
     port: int = 8000
@@ -17,12 +21,25 @@ class TestDatabaseConfig(BaseModel):
 
 class ApiV1Prefix(BaseModel):
     prefix: str = "/api_v1"
-    users: str = '/users'
+    users: str = "/users"
+    auth: str = "/auth"
 
 
 class ApiPrefix(BaseModel):
     prefix: str = "/api"
     v1: ApiV1Prefix = ApiV1Prefix()
+
+    @property
+    def bearer_token_url(self) -> str:
+        parts = (self.prefix, self.v1.auth, "/jwt", "/login")
+        path = "".join(parts)
+        return path[1:]
+
+
+class AccessTokenConfig(BaseModel):
+    lifetime_seconds: int = 3600
+    reset_password_token_secret: str
+    verification_token_secret: str
 
 
 class DatabaseConfig(BaseModel):
@@ -52,6 +69,8 @@ class Settings(BaseSettings):
     load_dotenv()
     db: DatabaseConfig
     test_db: TestDatabaseConfig
+    access_token: AccessTokenConfig
+    redis_db: RedisSettings
 
 
 settings = Settings()
