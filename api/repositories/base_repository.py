@@ -7,7 +7,7 @@ T = TypeVar('T')
 class BaseRepository(ABC, Generic[T]):
 
     @abstractmethod
-    async def get_all(self) -> Sequence[T]:
+    async def get_all(self, limit, offset) -> Sequence[T]:
         pass
 
     @abstractmethod
