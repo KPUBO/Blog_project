@@ -41,15 +41,15 @@
     ```bash
    docker-compose up -d  
 Или вручную:
-- Установить зависимости: pip install -r requirements.txt
+   - Установить зависимости: pip install -r requirements.txt
 
-- Запустить Postgres + Redis
+   - Запустить Postgres + Redis
 
-- Применить миграции: alembic upgrade head
+   - Применить миграции: alembic upgrade head
 
-- Запустить FastAPI: uvicorn app.main:app --reload
+   - Запустить FastAPI: uvicorn app.main:app --reload
 
-- Запустить Celery: celery -A app.tasks.celery_app worker --loglevel=info
+   - Запустить Celery: celery -A app.tasks.celery_app worker --loglevel=info
 
 4. **Документация API**
 
