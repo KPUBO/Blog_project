@@ -26,7 +26,7 @@
 
 1. **Клонировать репозиторий**  
    ```bash  
-   git clone https://github.com/ваш-репозиторий/blog-fastapi.git  
+   git clone https://github.com/ваш-репозиторий/Blog_project.git  
    cd blog-fastapi 
    
 2. **Настройка окружения**
