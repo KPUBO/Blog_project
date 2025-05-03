@@ -6,12 +6,12 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from core.custom_types.user_id import UserIdType
+
 from core.models.base import Base
 from core.models.m2m_models.vote import user_post_votes
 
 
-class User(Base, SQLAlchemyBaseUserTable[UserIdType]):
+class User(Base, SQLAlchemyBaseUserTable[int]):
     created_at: Mapped[datetime] = mapped_column(
         server_default=text("TIMEZONE('utc', now())"))
     updated_at: Mapped[datetime] = mapped_column(
