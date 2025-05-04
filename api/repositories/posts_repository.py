@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Sequence, Optional
 
 import sqlalchemy
@@ -199,14 +200,15 @@ class PostRepository:
         try:
             update_data_dict = post.model_dump()
             result = await self.session.execute(
-                select(Category).where(Category.name == post.title)
+                select(Post).where(Post.title == post.title)
             )
             existing = result.scalar_one_or_none()
 
             if existing:
-                raise HTTPException(status_code=409, detail="Category with this name already exists")
+                raise HTTPException(status_code=409, detail="Post with this title already exists")
             for k, v in update_data_dict.items():
                 setattr(post_to_update, k, v)
+            post_to_update.updated_at = datetime.utcnow()
             await self.session.commit()
             return post_to_update
         except IntegrityError as e:
@@ -239,6 +241,7 @@ class PostRepository:
         try:
             post = Post(**post)
             self.session.add(post)
+            post.updated_at = datetime.utcnow()
             await self.session.commit()
             await self.session.refresh(post)
         except Exception:
@@ -302,6 +305,7 @@ class PostRepository:
 
         if post.status == Statuses.draft:
             post.status = Statuses.published
+            post.updated_at = datetime.utcnow()
             await self.session.commit()
             return post
 

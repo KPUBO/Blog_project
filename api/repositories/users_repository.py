@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Sequence, Optional
 
 from fastapi import HTTPException, Depends
@@ -42,6 +43,7 @@ class UserRepository:
         update_data_dict = user.model_dump()
         for k, v in update_data_dict.items():
             setattr(user_to_update, k, v)
+        user_to_update.updated_at = datetime.utcnow()
         await self.session.commit()
         return user_to_update
 
