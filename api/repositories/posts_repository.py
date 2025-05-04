@@ -234,6 +234,7 @@ class PostRepository:
     async def delete_by_id(self, post_id) -> Optional[T]:
         post_to_delete = await self.session.get(Post, post_id)
         await self.session.delete(post_to_delete)
+        post_to_delete.updated_at = datetime.utcnow()
         await self.session.commit()
         return post_to_delete
 
