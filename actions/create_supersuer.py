@@ -5,7 +5,7 @@ import os
 from api.dependencies.authentication.user_manager import get_user_manager
 from api.dependencies.authentication.users import get_user_db
 from core.models import db_helper
-from core.authentication.UserManager import UserManager
+from core.authentication.user_manager import UserManager
 from core.models.user_models.user import User
 from core.schemas.user import UserCreate
 

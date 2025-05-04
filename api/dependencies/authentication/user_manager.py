@@ -4,7 +4,7 @@ from fastapi import Depends
 from fastapi_users_db_sqlalchemy import SQLAlchemyUserDatabase
 
 from api.dependencies.authentication.users import get_user_db
-from core.authentication.UserManager import UserManager
+from core.authentication.user_manager import UserManager
 
 
 async def get_user_manager(
